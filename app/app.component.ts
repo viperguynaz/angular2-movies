@@ -26,7 +26,7 @@ import {MovieService} from './theMovieDB/movie.service'
 ])
 
 export class AppComponent implements OnInit { 
-    public movie: Movie;
+    
     public movieList: Movie[];
 
     constructor(
