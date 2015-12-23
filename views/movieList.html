@@ -1,4 +1,7 @@
 <h1>My Movie App</h1>
 <ul *ngIf="movieList">
-    <li *ngFor="#movie of movieList.results">{{movie.title}}</li>
+    <li *ngFor="#movie of movieList.results" (click)="onSelect(movie)">
+        {{movie.title}}
+    </li>
 </ul>
+<router-outlet></router-outlet>
