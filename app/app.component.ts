@@ -1,15 +1,23 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
+import {Http, HTTP_PROVIDERS} from 'angular2/http';
+import 'rxjs/add/operator/map';
+
 import{Movie} from './theMovieDB/movie'
 import {LoggerService} from './logger.service'
 import{MovieService} from './theMovieDB/movie.service'
-import 'rxjs/add/operator/map';
+
 
 @Component({
     selector: 'my-app', 
-    templateUrl: './views/movieList.html'
+    templateUrl: './views/movieList.html',
+    providers: [
+        HTTP_PROVIDERS,
+        LoggerService,
+        MovieService
+    ]
 })
 
-export class AppComponent { 
+export class AppComponent implements OnInit { 
     public movie: Movie;
     public movieList: Movie[];
     private _movieService: MovieService;
@@ -22,10 +30,15 @@ export class AppComponent {
         //         data => this.movie = data,
         //         err => this._logger.error(err),
         //         () => console.log("getMovie complete....."));
-        movieService.getNowPlaying()
+
+    }   
+    
+    ngOnInit() {
+         this._movieService.init();
+         this._movieService.getNowPlaying()
             .subscribe( 
                 data => this.movieList = data,
                 err => this._logger.error(err),
-                () => console.log("getNowPlaying complete....."));
-    }   
+                () => console.log("getNowPlaying complete....."));        
+    }
 }
